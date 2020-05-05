@@ -20,22 +20,19 @@ class SearchBooks extends Component {
     }
     render(){
 
-        const {query,books,loading} = this.state;
+        const {searchQuery,searchedBooks} = this.props;
         return (
             <div className="search-books">
             <div className="search-books-bar">
               <button className="close-search" onClick={() => this.props.onBackPress()}>Close</button>
               <div className="search-books-input-wrapper">
-                <input type="text" placeholder="Search by title or author" value={query} onChange={(e)=>{this.searchBooksBasedOnQuery(e.target.value)}}/>
+                <input type="text" placeholder="Search by title or author" value={searchQuery} onChange={(e)=>{this.props.onSearch(e.target.value)}}/>
               </div>
             </div>
             <div className="search-books-results">
         <ol className="books-grid">
-        
-            {loading && 
-            <div>Show Spinner</div>}
-            {books && Array.isArray(books) && books.map(book=>{
-                return <Book book={book}/>
+            {searchedBooks && Array.isArray(searchedBooks) && searchedBooks.map(book=>{
+                return <Book book={book} updateShelf={this.props.updateShelf}/>
             })}
         </ol>
             </div>
