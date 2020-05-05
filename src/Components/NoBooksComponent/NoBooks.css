@@ -1,0 +1,17 @@
+.container {
+  background-color: rgb(241, 238, 248);
+  width: 100vw;
+  padding: 10px;
+  border-radius: 10px;
+}
+.not-found-image {
+  width: 200px;
+  height: 160px;
+  object-fit: cover;
+  opacity: 0.96;
+  margin: 10px;
+  border-radius: 30px;
+}
+.message-holder {
+  padding: 5px;
+}

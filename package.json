@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.12",
+    "@material/react-snackbar": "^0.15.0",
     "@rmwc/circular-progress": "^6.0.14",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
@@ -15,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -25,5 +27,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "^2.0.5"
+  }
 }

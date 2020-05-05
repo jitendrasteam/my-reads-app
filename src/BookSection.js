@@ -1,15 +1,26 @@
-import React , {Component} from 'react'
-import {getAll} from './BooksAPI'
-import Book from './Book'
-
+import React, { Component } from "react";
+import { getAll } from "./BooksAPI";
+import Book from "./Book";
+import icon from "./icons/lender.png";
+import NoBooks from "./Components/NoBooksComponent/NoBooks";
 class BookSection extends Component {
-    render(){
-       const currentlyReading = this.props.books.filter(book=>book.shelf==='currentlyReading')
-       const wantToRead = this.props.books.filter(book=>book.shelf==='wantToRead')
-       const read = this.props.books.filter(book=>book.shelf==='read')
-        return (<div className="list-books">
+  render() {
+    const currentlyReading = this.props.books.filter(
+      (book) => book.shelf === "currentlyReading"
+    );
+    const wantToRead = this.props.books.filter(
+      (book) => book.shelf === "wantToRead"
+    );
+    const read = this.props.books.filter((book) => book.shelf === "read");
+    return (
+      <div className="list-books">
         <div className="list-books-title">
-          <h1>MyReads</h1>
+          <h1>
+            <span>
+              <img src={icon} className="icon-size" />
+            </span>
+            Lendr
+          </h1>
         </div>
         <div className="list-books-content">
           <div>
@@ -17,12 +28,14 @@ class BookSection extends Component {
               <h2 className="bookshelf-title">Currently Reading</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                {!currentlyReading.length&&
-                     <div>Loading</div>
-                  }
-                  {
-                    currentlyReading.map(book=><Book book={book} updateShelf={this.props.updateShelf}/>)
-                  }
+                  {!currentlyReading.length && <NoBooks />}
+                  {currentlyReading.map((book, index) => (
+                    <Book
+                      key={`${book.id}-${index}`}
+                      book={book}
+                      updateShelf={this.props.updateShelf}
+                    />
+                  ))}
                 </ol>
               </div>
             </div>
@@ -30,14 +43,14 @@ class BookSection extends Component {
               <h2 className="bookshelf-title">Want to Read</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                  {!wantToRead.length&&
-                     <div>Loading</div>
-                  }
-                {
-                    wantToRead.map(book=>{
-                      return <Book book={book} updateShelf={this.props.updateShelf}/>
-                    })
-                  }
+                  {!wantToRead.length && <NoBooks />}
+                  {wantToRead.map((book, index) => (
+                    <Book
+                      key={`${book.id}-${index}`}
+                      book={book}
+                      updateShelf={this.props.updateShelf}
+                    />
+                  ))}
                 </ol>
               </div>
             </div>
@@ -45,14 +58,14 @@ class BookSection extends Component {
               <h2 className="bookshelf-title">Read</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                {!read.length&&
-                     <div>Loading</div>
-                  }
-                {
-                    read.map(book=>{
-                      return <Book book={book} updateShelf={this.props.updateShelf}/>
-                    })
-                  }
+                  {!read.length && <NoBooks />}
+                  {read.map((book, index) => (
+                    <Book
+                      key={`${book.id}-${index}`}
+                      book={book}
+                      updateShelf={this.props.updateShelf}
+                    />
+                  ))}
                 </ol>
               </div>
             </div>
@@ -62,8 +75,8 @@ class BookSection extends Component {
           <button onClick={() => this.props.searchBook()}>Add a book</button>
         </div>
       </div>
-   )
-    }
+    );
+  }
 }
 
 export default BookSection;
