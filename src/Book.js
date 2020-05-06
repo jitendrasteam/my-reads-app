@@ -44,6 +44,7 @@ class Book extends Component {
               <div key={`${authors}-${index}`}>{authors}</div>
             ))}
         </div>
+
       </div>
     );
   }

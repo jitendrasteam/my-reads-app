@@ -39,7 +39,7 @@ class SearchBooks extends Component {
                   />
                 );
               })}
-            {!searchedBooks && (
+            {(!searchedBooks) && (
               <div>
                 <img className="search-image" src={searchImage} />
                 <div

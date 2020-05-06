@@ -13,6 +13,7 @@ class BooksApp extends React.Component {
     books: [],
     searchedBooks: [],
     showSnackBar: false,
+    snackBarMessage: "Updated"
   };
 
   async componentDidMount() {
@@ -25,23 +26,42 @@ class BooksApp extends React.Component {
       .then(() =>
         this.setState({
           showSnackBar: true,
+          snackBarMessage: "Updated"
         })
       );
   }
 
   async getBooks() {
     let books = await getAll();
-    this.setState({
-      books: books,
-    });
+    this.setState((previosState)=>({
+      query:previosState.query,
+      searchedBook:previosState.searchedBooks,
+      books:books
+    }));
   }
 
   async searchBooksBasedOnQuery(query) {
-    const searchedBooks = await search(query);
     this.setState({
       query,
-      searchedBooks,
+      showSnackBar: true,
+      snackBarMessage: "Loading Please wait"
     });
+    let searchedBooks = await search(query);
+    if(searchedBooks && Array.isArray(searchedBooks)){
+    searchedBooks = searchedBooks.map(book => {
+      book.shelf = "none";
+      this.state.books.forEach(book2 => {
+        if (book.id === book2.id) {
+          book.shelf = book2.shelf;
+        }
+      })
+      return book
+    })
+  }
+  this.setState({
+    searchedBooks:searchedBooks||[],
+    showSnackBar: false
+  });
   }
 
   render() {
@@ -54,6 +74,10 @@ class BooksApp extends React.Component {
             <BookSection
               books={this.state.books}
               searchBook={() => {
+                this.setState({
+                  searchedBooks:[],
+                  query:""
+                })
                 history.push("/search");
               }}
               updateShelf={(book, shelf) => {
@@ -67,8 +91,9 @@ class BooksApp extends React.Component {
           render={({ history }) => (
             <SearchBooks
               updateShelf={(book, shelf) => {
-                this.updateShelf(book, shelf);
                 history.push("/");
+                this.updateShelf(book, shelf);
+              
               }}
               onBackPress={() => {
                 history.push("/");
@@ -84,7 +109,7 @@ class BooksApp extends React.Component {
         <div>
           {this.state.showSnackBar && (
             <Snackbar
-              message="Updated"
+              message={this.state.snackBarMessage}
               onClose={() => {
                 this.setState({
                   showSnackBar: false,
